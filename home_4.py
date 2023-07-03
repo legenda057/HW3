@@ -13,32 +13,42 @@ class Washer:
         return f"Ваш бренд - {self.brand}\nЦвет - {self.color}"
     
     def start(self):
-        self.is_work = True
-        self.powder -= 20
+        if self.powder >= 100:
+            return f"Вы можете положить только 100gram порошка:"
+        else:
+            self.powder -= 20
         if self.powder < 20:
-            print("Не хватает порошка")
-        else:
-            print(f"Ваша машина работает - {self.is_work}")
+            return f"Не хватает порошка"
+        self.is_work = True
+        return f"Ваша машина работает - {self.is_work}"
 
-    def refuel(self, gram):
-        self.powder = gram
-        if gram > 100:
-            print("Вы можете положить только 100gram порошка:")
-        elif gram < 0:
-            print("вы не пополнели")
-        elif gram > 0 and gram < 10:
-            print("Вы пополнили слишком мало:")
-        else:
-            return f"{self.start()}"
+    def refuel(self):
+        if self.powder > 100:
+            return f"Вы можете положить только 100gram порошка:"
+        self.powder += 100
+        return f"Машинка заправлена"
+            
+              
 
     def finish(self):
         self.is_work = False
         return f"Стиральная машина отключена - {self.is_work}"
+    
+    def main(self):
+        while True:
+            commands = input("1 - Информация, 2 - Начало стирки, 3 - Заправка порошка, 4 - Финиш :")
+            if commands == "1":
+                print(washer)
+            elif commands == "2":
+                print(washer.start())
+            elif commands == "3":
+                print(washer.refuel())
+            elif commands == "4":
+                print(washer.finish())
+                break
+        return f"До свидания!"        
             
 
 
 washer = Washer('AEG', 'Black')
-print(washer)
-print(washer.info())
-washer.refuel(100)
-print(washer.finish())
+print(washer.main())
